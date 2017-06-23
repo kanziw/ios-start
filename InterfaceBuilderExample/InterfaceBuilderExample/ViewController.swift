@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var label: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,5 +22,9 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func touchAction(_ sender: UIButton) {
+        // 레이블의 텍스트를 변경하는 코드
+        label.text = "Hellow Guys!"
+    }
 }
 
