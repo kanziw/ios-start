@@ -13,6 +13,7 @@
 		634E29F21EFC9501002FFA04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 634E29F11EFC9501002FFA04 /* Assets.xcassets */; };
 		634E29F51EFC9501002FFA04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 634E29F31EFC9501002FFA04 /* LaunchScreen.storyboard */; };
 		634E2A001EFC9502002FFA04 /* LottoDrawExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634E29FF1EFC9502002FFA04 /* LottoDrawExampleTests.swift */; };
+		634E2A0B1EFC99CD002FFA04 /* LottoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634E2A0A1EFC99CD002FFA04 /* LottoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		634E29FB1EFC9502002FFA04 /* LottoDrawExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LottoDrawExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		634E29FF1EFC9502002FFA04 /* LottoDrawExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottoDrawExampleTests.swift; sourceTree = "<group>"; };
 		634E2A011EFC9502002FFA04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		634E2A0A1EFC99CD002FFA04 /* LottoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				634E29F11EFC9501002FFA04 /* Assets.xcassets */,
 				634E29F31EFC9501002FFA04 /* LaunchScreen.storyboard */,
 				634E29F61EFC9501002FFA04 /* Info.plist */,
+				634E2A0A1EFC99CD002FFA04 /* LottoCell.swift */,
 			);
 			path = LottoDrawExample;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				634E29ED1EFC9501002FFA04 /* ViewController.swift in Sources */,
+				634E2A0B1EFC99CD002FFA04 /* LottoCell.swift in Sources */,
 				634E29EB1EFC9501002FFA04 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
