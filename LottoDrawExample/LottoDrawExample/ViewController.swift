@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     
     // 해당 섹션의 셀 개수 - 필수 메서드
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     // 샐 생성과 반환 = 필수 메서드
