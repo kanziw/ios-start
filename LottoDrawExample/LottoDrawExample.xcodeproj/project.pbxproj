@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6325ECDB1F04878000402A49 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6325ECDA1F04878000402A49 /* libsqlite3.tbd */; };
 		634E29EB1EFC9501002FFA04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634E29EA1EFC9501002FFA04 /* AppDelegate.swift */; };
 		634E29ED1EFC9501002FFA04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634E29EC1EFC9501002FFA04 /* ViewController.swift */; };
 		634E29F01EFC9501002FFA04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 634E29EE1EFC9501002FFA04 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6325ECDA1F04878000402A49 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		634E29E71EFC9501002FFA04 /* LottoDrawExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LottoDrawExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		634E29EA1EFC9501002FFA04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		634E29EC1EFC9501002FFA04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6325ECDB1F04878000402A49 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,12 +61,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6325ECD91F04878000402A49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6325ECDA1F04878000402A49 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		634E29DE1EFC9501002FFA04 = {
 			isa = PBXGroup;
 			children = (
 				634E29E91EFC9501002FFA04 /* LottoDrawExample */,
 				634E29FE1EFC9502002FFA04 /* LottoDrawExampleTests */,
 				634E29E81EFC9501002FFA04 /* Products */,
+				6325ECD91F04878000402A49 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +161,7 @@
 				TargetAttributes = {
 					634E29E61EFC9501002FFA04 = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					634E29FA1EFC9502002FFA04 = {
@@ -345,10 +358,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LottoDrawExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kanziw.LottoDrawExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LottoDrawExample/LottoDrawExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -357,10 +373,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = LottoDrawExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kanziw.LottoDrawExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LottoDrawExample/LottoDrawExample-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -412,6 +430,7 @@
 				634E2A061EFC9502002FFA04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		634E2A071EFC9502002FFA04 /* Build configuration list for PBXNativeTarget "LottoDrawExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +439,7 @@
 				634E2A091EFC9502002FFA04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

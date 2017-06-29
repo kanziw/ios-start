@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //TODO: Table 생성
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,6 +71,14 @@ class ViewController: UIViewController {
         }
         
         tableView.reloadData()
+    }
+    
+    @IBAction func loadData(_ sender: UIBarButtonItem) {
+        // TODO: loadData
+    }
+    
+    @IBAction func saveData(_ sender: UIBarButtonItem) {
+        // TODO: saveData
     }
 }
 
