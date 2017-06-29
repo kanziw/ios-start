@@ -138,6 +138,9 @@
                             <constraint firstItem="Zm9-Z0-nft" firstAttribute="top" secondItem="AdQ-db-sbr" secondAttribute="bottom" id="yVp-Il-ugk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="Zm9-Z0-nft" id="Bbg-oA-Ai8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
