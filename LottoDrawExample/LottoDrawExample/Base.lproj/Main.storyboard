@@ -29,7 +29,11 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="SMB-Rj-F6b"/>
                                     <barButtonItem title="Save" id="fxc-Y2-xF8"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="t2O-0w-ArB"/>
-                                    <barButtonItem title="Draw" id="cgN-P0-juw"/>
+                                    <barButtonItem title="Draw" id="cgN-P0-juw">
+                                        <connections>
+                                            <action selector="doDraw:" destination="BYZ-38-t0r" id="9ZP-Ce-6nf"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zm9-Z0-nft">

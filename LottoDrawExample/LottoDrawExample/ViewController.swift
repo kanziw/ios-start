@@ -44,5 +44,26 @@ class ViewController: UIViewController {
         return cell
     }
 
+    var lottoNumbers = Array<Array<Int>>()
+    @IBAction func doDraw(_ sender: UIBarButtonItem) {
+        lottoNumbers = Array<Array<Int>>()
+        
+        var originalNumbers = Array(1 ... 45 )
+        var index = 0
+        
+        for _ in 0 ... 4 {
+            originalNumbers = Array(1 ... 45)
+            var columnArray = Array<Int>()
+            
+            for _ in 0 ... 5 {
+                index = Int(arc4random_uniform(UInt32(originalNumbers.count)))
+                columnArray.append(originalNumbers[index])
+                originalNumbers.remove(at: index)
+            }
+            
+            columnArray.sort(by: { $0 < $1 })
+            lottoNumbers.append(columnArray)
+        }
+    }
 }
 
