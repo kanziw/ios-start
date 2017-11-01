@@ -12,8 +12,14 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var display: UILabel!
     
+    var isUserTyping = false
     @IBAction func touchDigit(_ sender: UIButton) {
-        display.text = display.text! + sender.currentTitle!
+        if (isUserTyping) {
+            display.text = display.text! + sender.currentTitle!
+        } else {
+            display.text = sender.currentTitle!
+            isUserTyping = true
+        }
     }
 }
 
