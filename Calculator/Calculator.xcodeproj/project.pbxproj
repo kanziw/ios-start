@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EC195B81FB0094E0083308E /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC195B71FB0094E0083308E /* CalculatorBrain.swift */; };
 		632315171FA9BB0D00920D1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632315161FA9BB0D00920D1E /* AppDelegate.swift */; };
 		632315191FA9BB0D00920D1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632315181FA9BB0D00920D1E /* ViewController.swift */; };
 		6323151C1FA9BB0D00920D1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6323151A1FA9BB0D00920D1E /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1EC195B71FB0094E0083308E /* CalculatorBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
 		632315131FA9BB0D00920D1E /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		632315161FA9BB0D00920D1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		632315181FA9BB0D00920D1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				632315161FA9BB0D00920D1E /* AppDelegate.swift */,
 				632315181FA9BB0D00920D1E /* ViewController.swift */,
 				6323151A1FA9BB0D00920D1E /* Main.storyboard */,
+				1EC195B71FB0094E0083308E /* CalculatorBrain.swift */,
 				6323151D1FA9BB0D00920D1E /* Assets.xcassets */,
 				6323151F1FA9BB0D00920D1E /* LaunchScreen.storyboard */,
 				632315221FA9BB0D00920D1E /* Info.plist */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EC195B81FB0094E0083308E /* CalculatorBrain.swift in Sources */,
 				632315191FA9BB0D00920D1E /* ViewController.swift in Sources */,
 				632315171FA9BB0D00920D1E /* AppDelegate.swift in Sources */,
 			);
@@ -304,6 +308,7 @@
 				632315271FA9BB0D00920D1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
