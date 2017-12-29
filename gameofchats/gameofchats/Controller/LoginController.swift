@@ -28,11 +28,11 @@ class LoginController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
         return button
     }()
     
-    func handleLoginRegister() {
+    @objc func handleLoginRegister() {
         if loginRegisterSegmentedControl.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
@@ -57,7 +57,7 @@ class LoginController: UIViewController {
         }
     }
     
-    @objc func handleRegister() {
+    func handleRegister() {
         guard let email = emailTextField.text,
             let password = passwordTextField.text,
             let name = nameTextField.text else {
