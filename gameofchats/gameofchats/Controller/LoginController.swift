@@ -211,6 +211,8 @@ class LoginController: UIViewController {
         inputsContainerViewHeightAnchor = inputsContainerView.heightAnchor.constraint(equalToConstant: 150)
         inputsContainerViewHeightAnchor?.isActive = true
         
+        passwordTextField.delegate = self
+        
         inputsContainerView.addSubview(nameTextField)
         inputsContainerView.addSubview(nameSeparatorView)
         inputsContainerView.addSubview(emailTextField)
@@ -236,7 +238,7 @@ class LoginController: UIViewController {
         emailTextField.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor).isActive = true
         emailTextFieldHeightAnchor = emailTextField.heightAnchor.constraint(equalTo: inputsContainerView.heightAnchor, multiplier: 1/3)
         emailTextFieldHeightAnchor?.isActive = true
-
+        
         // need x, y, width, height constraints
         emailSeparatorView.leftAnchor.constraint(equalTo: inputsContainerView.leftAnchor).isActive = true
         emailSeparatorView.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
@@ -263,5 +265,12 @@ class LoginController: UIViewController {
 extension UIColor {
     convenience init(r: CGFloat, g:CGFloat, b:CGFloat) {
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
+    }
+}
+
+extension LoginController: UITextFieldDelegate {
+    func textFieldShouldReturn (_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
