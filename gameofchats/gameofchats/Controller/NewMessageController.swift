@@ -49,14 +49,11 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
-        
-        //        cell.imageView?.image = #imageLiteral(resourceName: "gameofthrones_splash")
-        //        cell.imageView?.contentMode = .scaleAspectFill
         
         if let profileImageUrl = user.profileImageUrl, let url = URL(string: profileImageUrl) {
             URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
@@ -67,12 +64,16 @@ class NewMessageController: UITableViewController {
                 }
                 
                 DispatchQueue.main.async {
-                    //                    cell.imageView?.image = UIImage(data: data!)
+                    cell.profileImageView.image = UIImage(data: data!)
                 }
             }).resume()
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 
@@ -89,6 +90,8 @@ class UserCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "gameofthrones_splash")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
