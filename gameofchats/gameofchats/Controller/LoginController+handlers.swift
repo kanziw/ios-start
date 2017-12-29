@@ -57,6 +57,9 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 return
             }
             
+            // do not ask to Firebase
+            // self.messagesController?.fetchUserAndSetupNavBarTitle()
+            self.messagesController?.navigationItem.title = values["name"]
             self.dismiss(animated: true, completion: nil)
         })
     }
