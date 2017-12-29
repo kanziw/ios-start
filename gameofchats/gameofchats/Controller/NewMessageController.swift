@@ -7,15 +7,31 @@
 //
 
 import UIKit
+import Firebase
 
 class NewMessageController: UITableViewController {
     
     let cellId = "cellId"
+    var users = [AUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancle))
+        
+        fetchUser()
+    }
+    
+    func fetchUser() {
+        Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user = AUser()
+                
+                // if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary key
+                user.setValuesForKeys(dictionary)
+                self.users.append(user)
+            }
+        }, withCancel: nil)
     }
     
     @objc func handleCancle() {
