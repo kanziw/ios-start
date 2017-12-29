@@ -55,6 +55,21 @@ class NewMessageController: UITableViewController {
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
         
+        cell.imageView?.image = #imageLiteral(resourceName: "gameofthrones_splash")
+        if let profileImageUrl = user.profileImageUrl, let url = URL(string: profileImageUrl) {
+            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+                // download hit an error so lets return out
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    cell.imageView?.image = UIImage(data: data!)
+                }
+            }).resume()
+        }
+        
         return cell
     }
 }
