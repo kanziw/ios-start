@@ -19,6 +19,8 @@ class NewMessageController: UITableViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancle))
         
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        
         fetchUser()
     }
     
@@ -30,6 +32,10 @@ class NewMessageController: UITableViewController {
                 // if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary key
                 user.setValuesForKeys(dictionary)
                 self.users.append(user)
+                
+                // this will crash because of background thread, so lets use dispatch_async to fix
+                // self.tableView.reloadData()
+                DispatchQueue.main.async { self.tableView.reloadData() }
             }
         }, withCancel: nil)
     }
@@ -39,15 +45,26 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return users.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // let use a hack for new, we actually need to dequeue our cells for memory efficiency
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
-        cell.textLabel?.text = "Dummy TEXT LALALLA"
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         
         return cell
+    }
+}
+
+class UserCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
