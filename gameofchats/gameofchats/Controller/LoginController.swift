@@ -57,38 +57,6 @@ class LoginController: UIViewController {
         }
     }
     
-    func handleRegister() {
-        guard let email = emailTextField.text,
-            let password = passwordTextField.text,
-            let name = nameTextField.text else {
-                print("Form is not valid")
-                return
-        }
-        Auth.auth().createUser(withEmail: email, password: password) { (user: User?, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            // successfully authenticated user
-            let ref = Database.database().reference(fromURL: "https://gameofchats-ddd9f.firebaseio.com/")
-            let userReference = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
-    }
-    
     let nameTextField : UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
@@ -125,11 +93,15 @@ class LoginController: UIViewController {
         return tf
     }()
     
-    let profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "gameofthrones_splash")//UIImage(named: "gameofthrones_splash")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        imageView.isUserInteractionEnabled = true
+        
         return imageView
     }()
     
