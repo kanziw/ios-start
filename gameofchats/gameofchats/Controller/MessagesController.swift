@@ -18,6 +18,41 @@ class MessagesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "new_message_icon"), style: .plain, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
+        
+        observeMessages()
+    }
+    
+    var messages = [Message]()
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                message.setValuesForKeys(dictionary)
+                self.messages.append(message)
+                
+                // this will crash because of backgroud thread, so lets call this on dispatch_async main thread
+                // self.tableView.reloadData()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.toId
+        cell.detailTextLabel?.text = message.text
+        
+        return cell
     }
     
     @objc func handleNewMessage() {
