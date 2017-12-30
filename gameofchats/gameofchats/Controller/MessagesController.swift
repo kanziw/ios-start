@@ -27,6 +27,7 @@ class MessagesController: UITableViewController {
     }
     
     var messages = [Message]()
+    var messagesDictionary = [String: Message]()
     
     func observeMessages() {
         let ref = Database.database().reference().child("messages")
@@ -34,7 +35,15 @@ class MessagesController: UITableViewController {
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let message = Message()
                 message.setValuesForKeys(dictionary)
-                self.messages.append(message)
+                // self.messages.append(message)
+                
+                if let toId = message.toId {
+                    self.messagesDictionary[toId] = message
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sort(by: { (message1, message2) -> Bool in
+                        return message1.timestamp!.intValue > message2.timestamp!.intValue
+                    })
+                }
                 
                 // this will crash because of backgroud thread, so lets call this on dispatch_async main thread
                 // self.tableView.reloadData()
