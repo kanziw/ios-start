@@ -55,6 +55,10 @@ class MessagesController: UITableViewController {
         
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(containerView)
+        
         let profileImageView = UIImageView()
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.contentMode = .scaleAspectFill
@@ -64,25 +68,28 @@ class MessagesController: UITableViewController {
             profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
         }
         
-        titleView.addSubview(profileImageView)
+        containerView.addSubview(profileImageView)
         
         // ios 9 constraint anchors
         // need x,y,width,height
-        profileImageView.leftAnchor.constraint(equalTo: titleView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         let nameLaber = UILabel()
         nameLaber.text = user.name
         nameLaber.translatesAutoresizingMaskIntoConstraints = false
-        titleView.addSubview(nameLaber)
+        containerView.addSubview(nameLaber)
         
         // need x,y,width,height anchor
         nameLaber.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
         nameLaber.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLaber.rightAnchor.constraint(equalTo: titleView.rightAnchor).isActive = true
+        nameLaber.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         nameLaber.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
         self.navigationItem.titleView = titleView
     }
