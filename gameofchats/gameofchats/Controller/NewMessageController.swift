@@ -28,6 +28,7 @@ class NewMessageController: UITableViewController {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = AUser()
+                user.id = snapshot.key
                 
                 // if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary key
                 user.setValuesForKeys(dictionary)
@@ -71,7 +72,8 @@ class NewMessageController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
             print("Dismiss completed")
-            self.messageController?.showChatController()
+            let user = self.users[indexPath.row]
+            self.messageController?.showChatControllerForUser(user: user)
         }
     }
 }
