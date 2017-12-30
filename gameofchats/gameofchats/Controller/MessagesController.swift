@@ -95,7 +95,7 @@ class MessagesController: UITableViewController {
     }
     
     @objc func showChatController() {
-        let chatLogController = ChatLogController()
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     
