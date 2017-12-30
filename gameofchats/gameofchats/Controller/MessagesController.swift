@@ -43,9 +43,48 @@ class MessagesController: UITableViewController {
         Database.database().reference().child("users").child(uid)
             .observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    self.navigationItem.title = dictionary["name"] as? String
+                    let user = AUser()
+                    user.setValuesForKeys(dictionary)
+                    self.setupNavBarWithUser(user: user)
                 }
             }, withCancel: nil)
+    }
+    
+    func setupNavBarWithUser(user: AUser) {
+        let titleView = UIView()
+        
+        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        let profileImageView = UIImageView()
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
+        if let profileImageUrl = user.profileImageUrl {
+            profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        
+        titleView.addSubview(profileImageView)
+        
+        // ios 9 constraint anchors
+        // need x,y,width,height
+        profileImageView.leftAnchor.constraint(equalTo: titleView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let nameLaber = UILabel()
+        nameLaber.text = user.name
+        nameLaber.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(nameLaber)
+        
+        // need x,y,width,height anchor
+        nameLaber.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+        nameLaber.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        nameLaber.rightAnchor.constraint(equalTo: titleView.rightAnchor).isActive = true
+        nameLaber.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        
+        self.navigationItem.titleView = titleView
     }
     
     @objc func handleLogout() {
