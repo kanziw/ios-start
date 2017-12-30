@@ -95,7 +95,8 @@ class MessagesController: UITableViewController {
     }
     
     @objc func showChatController() {
-        print(123)
+        let chatLogController = ChatLogController()
+        navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     @objc func handleLogout() {
