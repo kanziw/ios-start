@@ -13,18 +13,7 @@ class UserCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            if let toId = message?.toId {
-                let ref = Database.database().reference().child("users").child(toId)
-                ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let dictionary = snapshot.value as? [String: AnyObject] {
-                        self.textLabel?.text = dictionary["name"] as? String
-                        
-                        if let profileImageUrl = dictionary["profileImageUrl"] as? String {
-                            self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
-                        }
-                    }
-                }, withCancel: nil)
-            }
+            setupNameAndProfileImage()
             self.detailTextLabel?.text = message?.text
             
             if let seconds = message?.timestamp?.doubleValue {
@@ -34,6 +23,28 @@ class UserCell: UITableViewCell {
                 dateFormatter.dateFormat = "a hh:mm:ss"
                 timeLabel.text = dateFormatter.string(from: timestampDate)
             }
+        }
+    }
+    
+    private func setupNameAndProfileImage() {
+        let chatPartnerId: String?
+        if message?.fromId == Auth.auth().currentUser?.uid {
+            chatPartnerId = message?.toId
+        } else {
+            chatPartnerId = message?.fromId
+        }
+        
+        if let id = chatPartnerId {
+            let ref = Database.database().reference().child("users").child(id)
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.textLabel?.text = dictionary["name"] as? String
+                    
+                    if let profileImageUrl = dictionary["profileImageUrl"] as? String {
+                        self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+                    }
+                }
+            }, withCancel: nil)
         }
     }
     
@@ -84,3 +95,4 @@ class UserCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
