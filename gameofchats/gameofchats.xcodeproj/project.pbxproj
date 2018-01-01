@@ -12,6 +12,7 @@
 		1EEA69091FF7534700717FEB /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEA69081FF7534700717FEB /* ChatLogController.swift */; };
 		1EEA690B1FF7AA8600717FEB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEA690A1FF7AA8600717FEB /* Message.swift */; };
 		1EEA690E1FF7B23D00717FEB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEA690D1FF7B23D00717FEB /* UserCell.swift */; };
+		1EF8D85D1FFA1E4C0014A1F4 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF8D85C1FFA1E4C0014A1F4 /* ChatMessageCell.swift */; };
 		48F6691417AE44FC982B56EC /* Pods_gameofchats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9064DCD07F3AAC2377947D74 /* Pods_gameofchats.framework */; };
 		63BBC1CA1FF5ECEB00F09182 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BBC1C91FF5ECEB00F09182 /* AppDelegate.swift */; };
 		63BBC1CC1FF5ECEB00F09182 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BBC1CB1FF5ECEB00F09182 /* MessagesController.swift */; };
@@ -30,6 +31,7 @@
 		1EEA69081FF7534700717FEB /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		1EEA690A1FF7AA8600717FEB /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		1EEA690D1FF7B23D00717FEB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		1EF8D85C1FFA1E4C0014A1F4 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		2D9F79B3FE8B71EE56304DCC /* Pods-gameofchats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gameofchats.release.xcconfig"; path = "Pods/Target Support Files/Pods-gameofchats/Pods-gameofchats.release.xcconfig"; sourceTree = "<group>"; };
 		63BBC1C61FF5ECEB00F09182 /* gameofchats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameofchats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63BBC1C91FF5ECEB00F09182 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				1EEA690D1FF7B23D00717FEB /* UserCell.swift */,
+				1EF8D85C1FFA1E4C0014A1F4 /* ChatMessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				1E3C84531FF6767300BDFFF1 /* LoginController+handlers.swift in Sources */,
 				63BBC1E11FF6424000F09182 /* NewMessageController.swift in Sources */,
 				63BBC1E61FF646EC00F09182 /* AUser.swift in Sources */,
+				1EF8D85D1FFA1E4C0014A1F4 /* ChatMessageCell.swift in Sources */,
 				63BBC1CA1FF5ECEB00F09182 /* AppDelegate.swift in Sources */,
 				1EEA690E1FF7B23D00717FEB /* UserCell.swift in Sources */,
 				1E3C84561FF6919A00BDFFF1 /* Extensions.swift in Sources */,

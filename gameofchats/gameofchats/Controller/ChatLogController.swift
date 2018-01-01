@@ -14,7 +14,38 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var user: AUser? {
         didSet {
             navigationItem.title = user?.name
+            
+            observeMessages()
         }
+    }
+    
+    var messages = [Message]()
+    
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(.childAdded, with: { (snapshot) in
+            
+            let messageId = snapshot.key
+            let messagesRef = Database.database().reference().child("messages").child(messageId)
+            messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                    return
+                }
+                
+                let message = Message()
+                // potential of crashing if keys don't match
+                message.setValuesForKeys(dictionary)
+                self.messages.append(message)
+                
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            }, withCancel: nil)
+        }, withCancel: nil)
     }
     
     lazy var inputTextField: UITextField = {
@@ -31,19 +62,18 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         super.viewDidLoad()
         
         collectionView?.backgroundColor = .white
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         
         setupInputComponents()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return messages.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
         
-        cell.backgroundColor = .blue
         return cell
     }
     
@@ -53,6 +83,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     func setupInputComponents() {
         let containerView = UIView()
+        containerView.backgroundColor = .white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(containerView)
@@ -105,7 +136,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let fromId = Auth.auth().currentUser!.uid
         let timestamp: NSNumber = NSNumber(value: Int(NSDate().timeIntervalSince1970))
         let values = ["text": inputTextField.text!, "toId": toId, "fromId": fromId, "timestamp": timestamp] as [String : Any]
-//        childRef.updateChildValues(values)
+        //        childRef.updateChildValues(values)
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
