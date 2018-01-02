@@ -70,9 +70,26 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         collectionView?.backgroundColor = .white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         
-        setupInputComponents()
+        collectionView?.keyboardDismissMode = .interactive
         
-        setupKeyboardObservers()
+//        setupInputComponents()
+//
+//        setupKeyboardObservers()
+    }
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            let containerView = UIView()
+            containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+            containerView.backgroundColor = .lightGray
+            
+            let textField = UITextField()
+            textField.placeholder = "ENTER SOME TEXT"
+            containerView.addSubview(textField)
+            textField.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+            
+            return containerView
+        }
     }
     
     func setupKeyboardObservers() {
