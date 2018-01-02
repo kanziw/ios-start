@@ -40,13 +40,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 // potential of crashing if keys don't match
                 message.setValuesForKeys(dictionary)
                 
-                if message.chatPartnerId() == self.user?.id {
-                    self.messages.append(message)
-                }
-                
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }
+                self.messages.append(message)
+                DispatchQueue.main.async { self.collectionView?.reloadData() }
             }, withCancel: nil)
         }, withCancel: nil)
     }
