@@ -64,6 +64,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView?.alwaysBounceVertical = true
         collectionView?.backgroundColor = .white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
@@ -167,6 +168,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 print(error!)
                 return
             }
+            
+            self.inputTextField.text = nil
             
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromId)
             
