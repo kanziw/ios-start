@@ -53,14 +53,23 @@ class MessagesController: UITableViewController {
                         })
                     }
                     
-                    // this will crash because of backgroud thread, so lets call this on dispatch_async main thread
-                    // self.tableView.reloadData()
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    self.timer?.invalidate()
+                    // we just canceled our timer
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
+                    // schedule a table reload in 0.1 sec
                 }
             }, withCancel: nil)
         }, withCancel: nil)
+    }
+    
+    var timer: Timer?
+    
+    @objc func handleReloadTable() {
+        // this will crash because of backgroud thread, so lets call this on dispatch_async main thread
+        // self.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func observeMessages() {
