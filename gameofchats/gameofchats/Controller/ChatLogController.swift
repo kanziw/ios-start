@@ -156,34 +156,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
     }
     
-    private func sendMessageWithImageUrl(imageUrl: String, image: UIImage) {
-        let ref = Database.database().reference().child("messages")
-        let childRef = ref.childByAutoId()
-        
-        let toId = user!.id!
-        let fromId = Auth.auth().currentUser!.uid
-        let timestamp: NSNumber = NSNumber(value: Int(NSDate().timeIntervalSince1970))
-        let values = ["toId": toId, "fromId": fromId, "timestamp": timestamp,
-                      "imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : Any]
-        
-        childRef.updateChildValues(values) { (error, ref) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            self.inputTextField.text = nil
-            
-            let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
-            
-            let messageId = childRef.key
-            userMessagesRef.updateChildValues([messageId: 1])
-            
-            let recipientUesrMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
-            recipientUesrMessagesRef.updateChildValues([messageId: 1])
-        }
-    }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
@@ -276,15 +248,26 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var containerViewBottomAnchor: NSLayoutConstraint?
     
     @objc func handleSend() {
+        let properties = ["text": inputTextField.text!] as [String: AnyObject]
+        sendMessageWithProperties(properties: properties)
+    }
+    
+    private func sendMessageWithImageUrl(imageUrl: String, image: UIImage) {
+        let properties = ["imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : AnyObject]
+        sendMessageWithProperties(properties: properties)
+    }
+    
+    private func sendMessageWithProperties(properties: [String: AnyObject]) {
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId()
         
-        // is it there best thing to include the name inside of the message node
         let toId = user!.id!
         let fromId = Auth.auth().currentUser!.uid
         let timestamp: NSNumber = NSNumber(value: Int(NSDate().timeIntervalSince1970))
-        let values = ["text": inputTextField.text!, "toId": toId, "fromId": fromId, "timestamp": timestamp] as [String : Any]
-        //        childRef.updateChildValues(values)
+        var values = ["toId": toId, "fromId": fromId, "timestamp": timestamp ] as [String : AnyObject]
+        
+        // key $0, value $1
+        properties.forEach({ values[$0] = $1 })
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
