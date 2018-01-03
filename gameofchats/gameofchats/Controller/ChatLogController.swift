@@ -322,9 +322,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     var startingFrameRef: CGRect?
     var blackBackgroundView: UIView?
+    var startingImageView: UIImageView?
     
     // my custom zooming logic
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
+        self.startingImageView = startingImageView
+        self.startingImageView?.isHidden = true
+        
         if let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil), let keyWindow = UIApplication.shared.keyWindow {
             startingFrameRef = startingFrame
             
@@ -357,6 +361,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
         if let startingFrame = startingFrameRef, let zoomOutImageView = tapGesture.view {
             // need to animate back out to controller
+            zoomOutImageView.layer.cornerRadius = 16
+            zoomOutImageView.clipsToBounds = true
+            
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 zoomOutImageView.frame = startingFrame
                 self.blackBackgroundView?.alpha = 0
@@ -364,6 +371,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             }, completion: { (completed) in
                 // do something here later
                 zoomOutImageView.removeFromSuperview()
+                self.startingImageView?.isHidden = false
             })
         }
     }
