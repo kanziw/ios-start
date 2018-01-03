@@ -35,7 +35,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
                 
                 self.messages.append(Message(dictionary: dictionary))
-                DispatchQueue.main.async { self.collectionView?.reloadData() }
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                    // scroll to the last index
+                    let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+                    self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: true)
+                }
             }, withCancel: nil)
         }, withCancel: nil)
     }
