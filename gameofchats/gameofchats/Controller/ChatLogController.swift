@@ -341,7 +341,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             keyWindow.addSubview(backView)
             keyWindow.addSubview(zoomingImageView)
             
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 backView.alpha = 1
                 self.inputContainerView.alpha = 0
                 
@@ -357,10 +357,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
         if let startingFrame = startingFrameRef, let zoomOutImageView = tapGesture.view {
             // need to animate back out to controller
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 zoomOutImageView.frame = startingFrame
                 self.blackBackgroundView?.alpha = 0
-            }, completion: { (completed: Bool) in
+                self.inputContainerView.alpha = 1
+            }, completion: { (completed) in
                 // do something here later
                 zoomOutImageView.removeFromSuperview()
             })
