@@ -320,22 +320,29 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return true
     }
     
+    var startingFrameRef: CGRect?
+    var blackBackgroundView: UIView?
+    
     // my custom zooming logic
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
-        if let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil),
-            let keyWindow = UIApplication.shared.keyWindow {
+        if let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil), let keyWindow = UIApplication.shared.keyWindow {
+            startingFrameRef = startingFrame
+            
             let zoomingImageView = UIImageView(frame: startingFrame)
             zoomingImageView.image = startingImageView.image
+            zoomingImageView.isUserInteractionEnabled = true
+            zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             
-            let blackBackGroundView = UIView(frame: keyWindow.frame)
-            blackBackGroundView.backgroundColor = .black
-            blackBackGroundView.alpha = 0
+            let backView = UIView(frame: keyWindow.frame)
+            blackBackgroundView = backView
+            backView.backgroundColor = .black
+            backView.alpha = 0
             
-            keyWindow.addSubview(blackBackGroundView)
+            keyWindow.addSubview(backView)
             keyWindow.addSubview(zoomingImageView)
             
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                blackBackGroundView.alpha = 1
+                backView.alpha = 1
                 self.inputContainerView.alpha = 0
                 
                 // h2 / w2 = h1 / w1
@@ -344,6 +351,19 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
                 zoomingImageView.center = keyWindow.center
             }, completion: nil)
+        }
+    }
+    
+    @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
+        if let startingFrame = startingFrameRef, let zoomOutImageView = tapGesture.view {
+            // need to animate back out to controller
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                zoomOutImageView.frame = startingFrame
+                self.blackBackgroundView?.alpha = 0
+            }, completion: { (completed: Bool) in
+                // do something here later
+                zoomOutImageView.removeFromSuperview()
+            })
         }
     }
 }
