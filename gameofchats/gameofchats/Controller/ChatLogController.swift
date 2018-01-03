@@ -322,13 +322,28 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     
     // my custom zooming logic
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
-        print("Performing zoom in logic in controller")
-        if let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil) {
+        if let startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil),
+            let keyWindow = UIApplication.shared.keyWindow {
             let zoomingImageView = UIImageView(frame: startingFrame)
-            zoomingImageView.backgroundColor = .red
+            zoomingImageView.image = startingImageView.image
             
-            UIApplication.shared.keyWindow?.addSubview(zoomingImageView)
+            let blackBackGroundView = UIView(frame: keyWindow.frame)
+            blackBackGroundView.backgroundColor = .black
+            blackBackGroundView.alpha = 0
+            
+            keyWindow.addSubview(blackBackGroundView)
+            keyWindow.addSubview(zoomingImageView)
+            
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                blackBackGroundView.alpha = 1
+                self.inputContainerView.alpha = 0
+                
+                // h2 / w2 = h1 / w1
+                // h2 = (h1 * w2) / w1
+                let height = (startingFrame.height * keyWindow.frame.width) / startingFrame.width
+                zoomingImageView.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                zoomingImageView.center = keyWindow.center
+            }, completion: nil)
         }
-        
     }
 }
