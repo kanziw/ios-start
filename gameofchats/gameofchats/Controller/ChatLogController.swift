@@ -167,8 +167,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 return
             }
             
-            if let storageUrl = metadata?.downloadURL()?.absoluteString {
-                print("URL: ", storageUrl)
+            if let videoUrl = metadata?.downloadURL()?.absoluteString {
+                print("URL: ", videoUrl)
+                
+                if let thumbnailImage = self.thumbnailImageForFileUrl(fileUrl: url) {
+                    //"imageUrl": imageUrl,
+                    let properties = ["imageWidth": thumbnailImage.size.width, "imageHeight": thumbnailImage.size.height, "videoUrl": videoUrl] as [String: AnyObject]
+                    self.sendMessageWithProperties(properties: properties)
+                }
             }
         })
         
@@ -181,6 +187,19 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         uploadTask.observe(.success) { (snapshot) in
             self.navigationItem.title = self.user?.name
         }
+    }
+    
+    private func thumbnailImageForFileUrl(fileUrl: URL) -> UIImage? {
+        let asset = AVAsset(url: fileUrl)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60), actualTime: nil)
+            return UIImage(cgImage: thumbnailCGImage)
+        } catch let err {
+            print(err)
+        }
+        return nil
     }
     
     private func uploadToFirebaseStorageUsingImage(image: UIImage) {
