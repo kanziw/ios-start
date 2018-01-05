@@ -132,7 +132,20 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let videoUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            print("Here's the file url:", videoUrl)
+            // we selected a video
+            handleVideoSelectedForUrl(url: videoUrl)
+        } else {
+            // we selected an image
+            handleImageSelectedForInfo(info: info)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func handleImageSelectedForInfo(info: [String: AnyObject]) {
         var selectedImageFromPicker: UIImage?
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
@@ -141,9 +154,21 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             selectedImageFromPicker = originalImage
         }
         
-        dismiss(animated: true, completion:{
-            if let selectedImage = selectedImageFromPicker {
-                self.uploadToFirebaseStorageUsingImage(image: selectedImage)
+        if let selectedImage = selectedImageFromPicker {
+            self.uploadToFirebaseStorageUsingImage(image: selectedImage)
+        }
+    }
+    
+    private func handleVideoSelectedForUrl(url: URL) {
+        let filename = "someFilename.mov"
+        Storage.storage().reference().child(filename).putFile(from: url, metadata: nil, completion: { (metadata, error) in
+            if error != nil {
+                print("Failed upload of video: ", error!)
+                return
+            }
+            
+            if let storageUrl = metadata?.downloadURL()?.absoluteString {
+                print("URL: ", storageUrl)
             }
         })
     }
