@@ -224,8 +224,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             cell.textView.textColor = .white
             cell.profileImageView.isHidden = true
             
-            cell.bubbleViewRightAnchor?.isActive = true
             cell.bubbleViewLeftAnchor?.isActive = false
+            cell.bubbleViewRightAnchor?.isActive = true
         } else {
             // incoming gray
             cell.bubbleView.backgroundColor = UIColor(r: 240, g: 240, b: 240)
